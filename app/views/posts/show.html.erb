@@ -10,5 +10,28 @@
   <%= @post.content %>
 </p>
 
+<%= form_for @comment do |f| %>
+  <%= render "shared/errors", object: @comment %>
+
+  <%= hidden_field_tag :post_id, @post.id %>
+
+  <%= f.label :name, "What's your name" %>
+  <%= f.text_field :name %>
+
+  <%= f.label :content, "Leave a Comment" %>
+  <%= f.text_area :content %>
+
+  <%= f.submit "Submit" %>
+<% end %>
+
+<% @post.comments.each do |comment| %>
+  <% unless comment.content.blank? %>
+    <div class="comment">
+      Commentor: <%= comment.name %>
+      <%= comment.content %>
+    </div>
+  <% end %>
+<% end %>
+
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
